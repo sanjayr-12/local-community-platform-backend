@@ -2,6 +2,8 @@
   "version": "5",
   "specifiers": {
     "jsr:@hono/hono@^4.11.7": "4.11.7",
+    "npm:dotenv@^17.2.4": "17.2.4",
+    "npm:drizzle-kit@*": "0.31.8_esbuild@0.25.12",
     "npm:drizzle-kit@~0.31.8": "0.31.8_esbuild@0.25.12",
     "npm:drizzle-orm@~0.45.1": "0.45.1_postgres@3.4.8",
     "npm:postgres@^3.4.8": "3.4.8"
@@ -280,6 +282,9 @@
         "ms"
       ]
     },
+    "dotenv@17.2.4": {
+      "integrity": "sha512-mudtfb4zRB4bVvdj0xRo+e6duH1csJRM8IukBqfTRvHotn9+LBXB8ynAidP9zHqoRC/fsllXgk4kCKlR21fIhw=="
+    },
     "drizzle-kit@0.31.8_esbuild@0.25.12": {
       "integrity": "sha512-O9EC/miwdnRDY10qRxM8P3Pg8hXe3LyU4ZipReKOgTwn4OqANmftj8XJz1UPUAS6NMHf0E2htjsbQujUTkncCg==",
       "dependencies": [
@@ -397,9 +402,16 @@
   "workspace": {
     "dependencies": [
       "jsr:@hono/hono@^4.11.7",
-      "npm:drizzle-kit@~0.31.8",
       "npm:drizzle-orm@~0.45.1",
       "npm:postgres@^3.4.8"
-    ]
+    ],
+    "packageJson": {
+      "dependencies": [
+        "npm:dotenv@^17.2.4",
+        "npm:drizzle-kit@~0.31.8",
+        "npm:drizzle-orm@~0.45.1",
+        "npm:postgres@^3.4.8"
+      ]
+    }
   }
 }
