@@ -8,6 +8,20 @@
       "when": 1770475682637,
       "tag": "0000_mushy_jean_grey",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1771092529199,
+      "tag": "0001_abandoned_pepper_potts",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1771093880863,
+      "tag": "0002_quick_namorita",
+      "breakpoints": true
     }
   ]
 }

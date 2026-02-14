@@ -1,9 +1,14 @@
 {
-  "nodeModulesDir":"auto",
+  "nodeModulesDir": "auto",
   "imports": {
     "drizzle-orm": "npm:drizzle-orm@^0.45.1",
     "hono": "jsr:@hono/hono@^4.11.7",
-    "postgres": "npm:postgres@^3.4.8"
+    "postgres": "npm:postgres@^3.4.8",
+    "google-auth-library": "npm:google-auth-library",
+    "joi": "npm:joi",
+    "reflect-metadata": "npm:reflect-metadata",
+    "typedi": "npm:typedi",
+    "unique-username-generator": "npm:unique-username-generator"
   },
   "tasks": {
     "start": "deno run --allow-net src/main.ts",
@@ -12,7 +17,16 @@
     "run-migration": "npx drizzle-kit migrate"
   },
   "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "jsx": "precompile",
-    "jsxImportSource": "hono/jsx"
+    "jsxImportSource": "hono/jsx",
+    "noImplicitAny": false,
+    "strict": false
+  },
+  "lint": {
+    "rules": {
+      "exclude": ["no-explicit-any"]
+    }
   }
 }
