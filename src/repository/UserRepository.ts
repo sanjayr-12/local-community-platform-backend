@@ -15,6 +15,14 @@ export class UserRepository {
       .returning();
   }
 
+  async findUserById(id: number) {
+    const user = await this.db
+      .select()
+      .from(users)
+      .where(sql`${users.id} = ${id}`);
+    return user;
+  }
+
   async findUserByEmail(email: string) {
     const user = await this.db
       .select()

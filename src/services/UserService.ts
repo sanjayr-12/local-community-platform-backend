@@ -2,6 +2,7 @@ import { Service } from "typedi";
 import { UserRepository } from "../repository/UserRepository.ts";
 import { generateUsername } from "unique-username-generator";
 import { verifyGoogleToken } from "../core/google.ts";
+import { generateJWT } from "../utils/jwt.ts";
 
 @Service()
 export class UserService {
@@ -22,7 +23,8 @@ export class UserService {
         const users = await this.userRepository.findUserByEmail(data.email);
 
         if (users && users.length > 0) {
-          throw new Error("Email Already exisits");
+          const token = await generateJWT({ id: users[0].id });
+          return [true, { user: users[0], token: token }];
         }
       }
 
@@ -41,7 +43,10 @@ export class UserService {
       }
 
       const user = await this.userRepository.signInWithGoogle(newUser);
-      return [true, user];
+      if (user && user.length > 0) {
+        const token = await generateJWT({ id: user[0].id });
+        return [true, { user: user[0], token: token }];
+      }
     } catch (error: any) {
       return [false, error.message];
     }

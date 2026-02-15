@@ -29,3 +29,13 @@ export const googleAuthController = async (c: Context) => {
     return c.json({ status: "error", message: "Internal server error" }, 500);
   }
 };
+
+export const getUserProfileController = (c: Context) => {
+  try {
+    const user = c.get("user");
+    return c.json({ status: "ok", user });
+  } catch (error: any) {
+    console.log("getUserProfileController():: " + error.message);
+    return c.json({ status: "error", message: "Internal server error" }, 500);
+  }
+};
