@@ -1,0 +1,1 @@
+ALTER TABLE "posts" ADD COLUMN "state_district_tag" text;

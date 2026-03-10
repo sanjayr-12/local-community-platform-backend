@@ -28,6 +28,7 @@ export const posts = pgTable("posts", {
   location: geometry("location", { type: "point", mode: "xy", srid: 4326 }),
   districtTag: text("district_tag"),
   stateTag: text("state_tag"),
+  stateDistrictTag: text("state_district_tag"),
   created_at: timestamp("created_At").defaultNow(),
   updatedAt: timestamp("updated_at", { mode: "date" })
     .notNull()

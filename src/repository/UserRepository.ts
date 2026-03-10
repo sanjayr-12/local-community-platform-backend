@@ -1,8 +1,9 @@
 import { Service } from "typedi";
 import { DB, getPostgresClient } from "../core/db.ts";
 import { AnyPgTable } from "drizzle-orm/pg-core";
-import { users } from "../db/schema/UserSchema.ts";
+import { posts, users } from "../db/schema/UserSchema.ts";
 import { sql } from "drizzle-orm";
+import { Location } from "../types.ts";
 
 @Service()
 export class UserRepository {
@@ -39,5 +40,26 @@ export class UserRepository {
     picture: string;
   }) {
     return await this.insert([data], users);
+  }
+
+  async addUserPost(data: {
+    userId: number;
+    content: string;
+    image_url?: string;
+    lat: string;
+    long: string;
+    location: Location;
+  }) {
+    const post = {
+      authorId: data.userId,
+      content: data.content,
+      imageUrl: data.image_url,
+      location: { x: Number(data.lat), y: Number(data.long) },
+      stateTag: data.location.state,
+      districtTag: data.location.county,
+      stateDistrictTag: data.location.state_district,
+    };
+
+    return await this.insert([post], posts);
   }
 }
