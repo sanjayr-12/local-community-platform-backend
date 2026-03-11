@@ -36,6 +36,20 @@
       "when": 1773166212924,
       "tag": "0004_flawless_spyke",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1773246877355,
+      "tag": "0005_elite_liz_osborn",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1773251573895,
+      "tag": "0006_wise_pyro",
+      "breakpoints": true
     }
   ]
 }

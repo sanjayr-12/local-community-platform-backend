@@ -3,6 +3,8 @@ import { DB, getPostgresClient } from "../core/db.ts";
 import { AnyPgTable } from "drizzle-orm/pg-core";
 import { posts } from "../db/schema/PostSchema.ts";
 import { Location } from "../types.ts";
+import { sql } from "drizzle-orm";
+import { users } from "../db/schema/UserSchema.ts";
 
 @Service()
 export class PostRepository {
@@ -18,7 +20,8 @@ export class PostRepository {
   async addPost(data: {
     userId: number;
     content: string;
-    image_url?: string;
+    imageUrl?: string;
+    publicId?: string;
     lat: string;
     long: string;
     location: Location;
@@ -26,7 +29,8 @@ export class PostRepository {
     const post = {
       authorId: data.userId,
       content: data.content,
-      imageUrl: data.image_url,
+      imageUrl: data.imageUrl,
+      publicId: data.publicId,
       location: { x: Number(data.lat), y: Number(data.long) },
       stateTag: data.location.state,
       districtTag: data.location.county,
@@ -34,5 +38,31 @@ export class PostRepository {
     };
 
     return await this.insert([post], posts);
+  }
+
+  async getPosts(location: Location, userId: number) {
+    try {
+      const allPosts = await this.db.execute(sql`
+      select 
+        p.id as "postId",
+        p.content as "content",
+        p.image_url as "imageUrl",
+        p.state_district_tag as "district",
+        p.public_id as "publicId",
+        p.created_at as "createdAt",
+        u.id as "userId",
+        u.name as "name",
+        u.username as "username",
+        u.picture as "picture"
+
+      from ${posts} p
+      inner join ${users} u 
+        on u.id = p.author_id
+      where u.id != ${userId} and p.state_district_tag = ${location.state_district}
+    `);
+      return [true, allPosts];
+    } catch (error) {
+      return [false, error.message];
+    }
   }
 }

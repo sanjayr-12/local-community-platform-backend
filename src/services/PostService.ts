@@ -10,7 +10,8 @@ export class PostService {
   async addPost(data: {
     userId: number;
     content: string;
-    image_url?: string;
+    imageUrl?: string;
+    publicId?: string;
     lat: string;
     long: string;
     location: any;
@@ -40,5 +41,32 @@ export class PostService {
     } catch (_) {
       return [false, "Error while adding post"];
     }
+  }
+
+  async getPosts(lat: string, long: string, userId: number) {
+    const location: any = await getReverseLocation(lat, long);
+
+    if (
+      !location?.address?.county ||
+      !location?.address?.state ||
+      !location?.address?.state_district
+    ) {
+      throw new Error("Location data is incomplete");
+    }
+
+    const locationObj: Location = {
+      county: location.address.county,
+      state: location.address.state,
+      state_district: location.address.state_district,
+    };
+
+    const [status, data] = await this.postRepository.getPosts(
+      locationObj,
+      userId,
+    );
+    if (status) {
+      return [true, data];
+    }
+    return [false, "Something went wrong"];
   }
 }

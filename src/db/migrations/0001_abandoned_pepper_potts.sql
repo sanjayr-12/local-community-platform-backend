@@ -1,1 +1,2 @@
-ALTER TABLE "users" ADD COLUMN "picture" varchar;
+ALTER TABLE "users"
+ADD COLUMN "picture" varchar;

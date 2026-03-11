@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/sanjayr-12/local-community-platform-backend#readme",
   "dependencies": {
+    "cloudinary": "^2.9.0",
     "dotenv": "^17.2.4",
     "drizzle-kit": "^0.31.8",
     "drizzle-orm": "^0.45.1",
@@ -28,5 +29,9 @@
     "reflect-metadata": "^0.2.2",
     "typedi": "^0.10.0",
     "unique-username-generator": "^1.5.1"
+  },
+  "devDependencies": {
+    "prettier": "^3.8.1",
+    "prettier-plugin-sql": "^0.19.2"
   }
 }
