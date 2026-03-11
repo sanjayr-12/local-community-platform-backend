@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 import {
-  addUserPostController,
   getUserProfileController,
   googleAuthController,
 } from "../controllers/UserController.ts";
@@ -13,6 +12,5 @@ userRouter.post("/google", googleAuthController);
 userRouter.use(authMiddleware);
 
 userRouter.get("/me", getUserProfileController);
-userRouter.post("/post", addUserPostController);
 
 export default userRouter;
