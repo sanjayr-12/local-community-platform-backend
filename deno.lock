@@ -2,7 +2,6 @@
   "version": "5",
   "specifiers": {
     "jsr:@hono/hono@^4.11.7": "4.11.7",
-    "npm:cloudinary@*": "2.9.0",
     "npm:cloudinary@^2.9.0": "2.9.0",
     "npm:dotenv@^17.2.4": "17.2.4",
     "npm:drizzle-kit@*": "0.31.8_esbuild@0.25.12",
