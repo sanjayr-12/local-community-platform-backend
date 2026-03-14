@@ -33,7 +33,14 @@ export const posts = pgTable(
 
 export const comments = pgTable("comments", {
   id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
-  post_id: integer("post_id").references(() => posts.id),
-  author_id: integer("author_id").references(() => users.id),
+  postId: integer("post_id").references(() => posts.id),
+  authorId: integer("author_id").references(() => users.id),
   content: text("content").notNull(),
+});
+
+export const saved = pgTable("saved_posts", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  authorId: integer("author_id").references(()=> users.id).notNull(),
+  postId: integer("post_id").references(()=>posts.id).notNull(),
+  createdAt: timestamp("created_at").defaultNow()
 });

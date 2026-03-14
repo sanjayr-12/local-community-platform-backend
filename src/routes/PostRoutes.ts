@@ -4,6 +4,9 @@ import {
   addPostController,
   getAllPostController,
   getMyPostsController,
+  getSavedPostController,
+  removeSavedPostController,
+  savePostController,
   uploadImageController,
 } from "../controllers/PostController.ts";
 
@@ -15,5 +18,8 @@ postRouter.post("/", addPostController);
 postRouter.post("/upload", uploadImageController);
 postRouter.get("/", getAllPostController);
 postRouter.get("/my", getMyPostsController)
+postRouter.post("/save", savePostController)
+postRouter.get("/save", getSavedPostController)
+postRouter.delete("/save/:id", removeSavedPostController)
 
 export default postRouter;
