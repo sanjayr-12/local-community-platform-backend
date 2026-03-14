@@ -50,6 +50,13 @@
       "when": 1773251573895,
       "tag": "0006_wise_pyro",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1773427192236,
+      "tag": "0007_skinny_inhumans",
+      "breakpoints": true
     }
   ]
 }

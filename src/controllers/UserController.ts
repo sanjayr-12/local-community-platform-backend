@@ -39,3 +39,17 @@ export const getUserProfileController = (c: Context) => {
     return c.json({ status: "error", message: "Internal server error" }, 500);
   }
 };
+
+export const getUserProfileV2Controller = async(c:Context)=>{
+  try {
+    const user = c.get("user").id
+    const [status, response] = await userService.getMeV2(user);
+    if(!status){
+      return c.json({status:"error", message:response}, 406);
+    }
+    return c.json({status:"ok", message:response}, 200)
+  } catch (error) {
+    console.log("getUserProfileController():: " + error.message)
+    return c.json({status:"error", message:"Internal server error"}, 500)
+  }
+}

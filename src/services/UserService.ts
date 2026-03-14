@@ -51,4 +51,8 @@ export class UserService {
       return [false, error.message];
     }
   }
+
+  async getMeV2(userId: number){
+    return await this.userRepository.getMeV2(userId);
+  }
 }

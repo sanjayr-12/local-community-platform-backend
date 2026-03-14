@@ -69,4 +69,8 @@ export class PostService {
     }
     return [false, "Something went wrong"];
   }
+
+  async getMyPosts(userId: number) {
+    return await this.postRepository.getMyPosts(userId);
+  }
 }

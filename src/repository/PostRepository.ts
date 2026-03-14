@@ -59,8 +59,35 @@ export class PostRepository {
       inner join ${users} u 
         on u.id = p.author_id
       where u.id != ${userId} and p.state_district_tag = ${location.state_district}
+       order by p.created_at desc
     `);
       return [true, allPosts];
+    } catch (error) {
+      return [false, error.message];
+    }
+  }
+
+  async getMyPosts(userId: number) {
+    try {
+      const myPosts = await this.db.execute(sql`
+    select
+      p.id as "postId",
+      p.content as "content",
+      p.image_url as "imageUrl",
+      p.state_district_tag as "district",
+      p.public_id as "publicId",
+      p.created_at as "createdAt",
+      u.id as "userId",
+      u.name as "name",
+      u.username as "username",
+      u.picture as "picture"
+
+    from ${posts} p
+    join ${users} u on p.author_id = u.id
+    where u.id = ${userId}
+    order by p.created_at desc
+    `);
+      return [true, myPosts];
     } catch (error) {
       return [false, error.message];
     }

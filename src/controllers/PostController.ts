@@ -79,3 +79,17 @@ export const getAllPostController = async (c: Context) => {
     return c.json({ status: "error", message: "Internal server error" }, 500);
   }
 };
+
+export const getMyPostsController = async (c: Context) => {
+  try {
+    const userId = c.get("user").id;
+    const [status, response] = await postService.getMyPosts(userId);
+    if (!status) {
+      return c.json({ status: "error", message: response });
+    }
+    return c.json({ status: "ok", data: response }, 200);
+  } catch (error) {
+    console.log("getMyPostsController():: ", error.message);
+    return c.json({ status: "error", message: "Internal server error" }, 500);
+  }
+};
