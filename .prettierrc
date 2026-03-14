@@ -1,0 +1,5 @@
+{
+  "plugins": ["prettier-plugin-sql"],
+  "sqlTemplateTags": ["sql"],
+  "language": "postgresql"
+}

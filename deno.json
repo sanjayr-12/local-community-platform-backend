@@ -8,7 +8,8 @@
     "joi": "npm:joi",
     "reflect-metadata": "npm:reflect-metadata",
     "typedi": "npm:typedi",
-    "unique-username-generator": "npm:unique-username-generator"
+    "unique-username-generator": "npm:unique-username-generator",
+    "cloudinary": "npm:cloudinary"
   },
   "tasks": {
     "start": "deno run --allow-net src/main.ts",

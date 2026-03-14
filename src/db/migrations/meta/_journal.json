@@ -22,6 +22,41 @@
       "when": 1771093880863,
       "tag": "0002_quick_namorita",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1773161613235,
+      "tag": "0003_fearless_morgan_stark",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1773166212924,
+      "tag": "0004_flawless_spyke",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1773246877355,
+      "tag": "0005_elite_liz_osborn",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1773251573895,
+      "tag": "0006_wise_pyro",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1773427192236,
+      "tag": "0007_skinny_inhumans",
+      "breakpoints": true
     }
   ]
 }

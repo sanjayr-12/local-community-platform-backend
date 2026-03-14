@@ -21,11 +21,20 @@ export const getPostgresClient = (): PostgresJsDatabase<typeof schema> => {
 
     dbInstance = drizzle(client, { schema });
 
-    console.log("DB Connected");
-
     return dbInstance;
   } catch (error: any) {
     console.log("DB connection error " + error.message);
     throw error;
+  }
+};
+
+export const checkDBConnection = async () => {
+  try {
+    const db = getPostgresClient();
+    await db.execute("SELECT 1");
+    console.log("DB Connected");
+    return;
+  } catch (error) {
+    return [false, error.message];
   }
 };

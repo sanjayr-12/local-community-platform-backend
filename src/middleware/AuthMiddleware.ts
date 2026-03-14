@@ -23,7 +23,7 @@ export const authMiddleware = async (c: Context, next: Next) => {
     return c.json({ status: "error", message: "Invalid User" }, 401);
   }
 
-  c.set("user", user);
+  c.set("user", user[0]);
 
   await next();
 };
