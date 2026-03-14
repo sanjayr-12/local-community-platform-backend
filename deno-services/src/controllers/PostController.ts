@@ -93,3 +93,56 @@ export const getMyPostsController = async (c: Context) => {
     return c.json({ status: "error", message: "Internal server error" }, 500);
   }
 };
+
+export const savePostController = async(c:Context) =>{
+  try {
+    const body = await c.req.json();
+    const requestSchema = Joi.object({
+      postId: Joi.number().required()
+    })
+    const {error} = requestSchema.validate(body)
+    if(error){
+      return c.json({status:"error", message:error.message}, 406)
+    }
+    const user = c.get("user").id
+    const [status, response] = await postService.savePost(body.postId, user);
+    if(!status){
+      return c.json({status:"error", message:response}, 406);
+    }
+    return c.json({status:"ok", data:response}, 200)
+  } catch (error) {
+    console.log("savePostController():: ", error.message)
+    return c.json({status:"error", message:"Internal server error"}, 500)
+  }
+}
+
+export const getSavedPostController = async(c:Context)=>{
+  try {
+    const user = c.get("user").id
+    const [status, response] = await postService.getSavedPost(user);
+    if(!status){
+      return c.json({status:"error", message:response}, 406);
+    }
+    return c.json({status:"ok", data:response}, 200)
+  } catch (error) {
+    console.log("getSavedPostController():: ", error.message)
+    return c.json({status:"error", message:"Internal server error"}, 500)
+  }
+}
+
+export const removeSavedPostController = async(c:Context)=>{
+  try {
+    const id = Number(c.req.param('id'))
+
+    const userId = c.get("user").id
+
+    const [status, response] = await postService.removeSavedPost(id, userId)
+    if(!status){
+      return c.json({status:"error", message:response}, 406);
+    }
+    return c.json({status:"ok", data:response}, 200)
+  } catch (error) {
+    console.log("removeSavedPostController():: ", error.message)
+    return c.json({status:"error", message:"Internal server error"}, 500)
+  }
+}

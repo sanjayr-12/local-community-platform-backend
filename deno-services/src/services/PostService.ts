@@ -73,4 +73,15 @@ export class PostService {
   async getMyPosts(userId: number) {
     return await this.postRepository.getMyPosts(userId);
   }
+
+  async savePost(postId:number, userId: number){
+    return await this.postRepository.savePost(postId, userId)
+  }
+
+  async getSavedPost(userId: number){
+    return await this.postRepository.getSavedPost(userId)
+  }
+  async removeSavedPost(postId: number, userId: number){
+    return await this.postRepository.removeSavedPost(postId, userId)
+  }
 }
