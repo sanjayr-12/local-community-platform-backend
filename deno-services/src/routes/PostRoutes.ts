@@ -5,6 +5,7 @@ import {
   getAllPostController,
   getMyPostsController,
   getSavedPostController,
+  getTrendingController,
   removeSavedPostController,
   savePostController,
   uploadImageController,
@@ -17,9 +18,11 @@ postRouter.use(authMiddleware);
 postRouter.post("/", addPostController);
 postRouter.post("/upload", uploadImageController);
 postRouter.get("/", getAllPostController);
-postRouter.get("/my", getMyPostsController)
-postRouter.post("/save", savePostController)
-postRouter.get("/save", getSavedPostController)
-postRouter.delete("/save/:id", removeSavedPostController)
+postRouter.get("/my", getMyPostsController);
+postRouter.get("/trending", getTrendingController);
+postRouter.post("/save", savePostController);
+postRouter.get("/save", getSavedPostController);
+postRouter.delete("/save/:id", removeSavedPostController);
 
 export default postRouter;
+

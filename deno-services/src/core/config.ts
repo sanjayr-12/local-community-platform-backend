@@ -12,4 +12,6 @@ export class Config {
     "CLOUDINARY_API_SECRET",
   );
   static readonly CLOUD_NAME: string = Deno.env.get("CLOUD_NAME");
+  static readonly ML_SERVICE_URL: string =
+    Deno.env.get("ML_SERVICE_URL") || "http://localhost:8000";
 }

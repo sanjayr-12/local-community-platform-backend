@@ -146,3 +146,18 @@ export const removeSavedPostController = async(c:Context)=>{
     return c.json({status:"error", message:"Internal server error"}, 500)
   }
 }
+
+export const getTrendingController = async (c: Context) => {
+  try {
+    const district = c.req.query("district");
+    if (!district || district.trim() === "") {
+      return c.json({ status: "error", message: "district query param is required" }, 406);
+    }
+    const [status, response] = await postService.getTrending(district);
+    if (!status) return c.json({ status: "error", message: response }, 503);
+    return c.json({ status: "ok", data: response }, 200);
+  } catch (error) {
+    console.log("getTrendingController():: ", error.message);
+    return c.json({ status: "error", message: "Internal server error" }, 500);
+  }
+};

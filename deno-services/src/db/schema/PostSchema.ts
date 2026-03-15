@@ -2,6 +2,7 @@ import {
   geometry,
   index,
   integer,
+  jsonb,
   pgTable,
   text,
   timestamp,
@@ -43,4 +44,25 @@ export const saved = pgTable("saved_posts", {
   authorId: integer("author_id").references(()=> users.id).notNull(),
   postId: integer("post_id").references(()=>posts.id).notNull(),
   createdAt: timestamp("created_at").defaultNow()
+});
+
+export const likes = pgTable("likes", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  postId: integer("post_id").references(() => posts.id).notNull(),
+  authorId: integer("author_id").references(() => users.id).notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const postViews = pgTable("post_views", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  postId: integer("post_id").references(() => posts.id).notNull(),
+  viewerId: integer("viewer_id").references(() => users.id).notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const trendingTopics = pgTable("trending_topics", {
+  id: integer("id").primaryKey().generatedAlwaysAsIdentity(),
+  district: text("district").notNull(),
+  keywords: jsonb("keywords").notNull(),
+  computedAt: timestamp("computed_at").defaultNow(),
 });

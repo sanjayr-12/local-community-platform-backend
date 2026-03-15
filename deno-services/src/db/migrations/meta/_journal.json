@@ -71,6 +71,13 @@
       "when": 1773496407328,
       "tag": "0009_minor_revanche",
       "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1773515294001,
+      "tag": "0010_lush_glorian",
+      "breakpoints": true
     }
   ]
 }

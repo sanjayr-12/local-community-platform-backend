@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+transformers
+torch
+keybert
+sentence-transformers
+psycopg2-binary
+python-dotenv
+apscheduler==3.10.4
+httpx
+pytest
