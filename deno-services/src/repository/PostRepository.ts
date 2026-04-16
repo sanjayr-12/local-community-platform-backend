@@ -198,6 +198,12 @@ export class PostRepository {
 
   async searchPostsByKeyword(district: string, keyword: string, userId: number) {
     try {
+      const words = keyword.trim().split(/\s+/).filter(w => w.length > 0);
+      const searchConditions = words.map(word => sql`p.content ILIKE ${'%' + word + '%'}`);
+      const searchFilter = searchConditions.length > 0
+        ? sql.join(searchConditions, sql` and `)
+        : sql`1=1`;
+
       const allPosts = await this.db.execute(sql`
         select
           p.id as "postId",
@@ -239,7 +245,7 @@ export class PostRepository {
           on v.post_id = p.id
 
         where p.state_district_tag = ${district}
-        and p.content ILIKE ${'%' + keyword + '%'}
+        and (${searchFilter})
 
         group by
           p.id, u.id, s.post_id, l_me.post_id
