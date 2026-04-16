@@ -33,7 +33,7 @@ app.get("/", (c: Context) => {
 });
 
 app.get("/ping", (c: Context) => {
-  console.log(`[ping] 🏓 Keep-alive request received at ${new Date().toISOString()}`);
+  console.log(`[ping] Keep-alive request received at ${new Date().toISOString()}`);
   return c.json({ status: "ok", message: "pong", timestamp: new Date().toISOString() });
 });
 
