@@ -195,4 +195,60 @@ export class PostRepository {
       return [false, error.message];
     }
   }
+
+  async searchPostsByKeyword(district: string, keyword: string, userId: number) {
+    try {
+      const allPosts = await this.db.execute(sql`
+        select
+          p.id as "postId",
+          p.content as "content",
+          p.image_url as "imageUrl",
+          p.state_district_tag as "district",
+          p.public_id as "publicId",
+          p.created_at as "createdAt",
+          u.id as "userId",
+          u.name as "name",
+          u.username as "username",
+          u.picture as "picture",
+          (s.post_id IS NOT NULL) as "isSaved",
+          (l_me.post_id IS NOT NULL) as "isLiked",
+          COUNT(DISTINCT l_all.id)::int as "likeCount",
+          COUNT(DISTINCT c.id)::int as "commentCount",
+          COUNT(DISTINCT v.id)::int as "viewCount"
+
+        from ${posts} p
+
+        inner join ${users} u
+          on u.id = p.author_id
+
+        left join ${saved} s
+          on s.post_id = p.id
+          and s.author_id = ${userId}
+
+        left join ${likes} l_me
+          on l_me.post_id = p.id
+          and l_me.author_id = ${userId}
+
+        left join ${likes} l_all
+          on l_all.post_id = p.id
+
+        left join "comments" c
+          on c.post_id = p.id
+
+        left join ${postViews} v
+          on v.post_id = p.id
+
+        where p.state_district_tag = ${district}
+        and p.content ILIKE ${'%' + keyword + '%'}
+
+        group by
+          p.id, u.id, s.post_id, l_me.post_id
+
+        order by p.created_at desc
+      `);
+      return [true, allPosts];
+    } catch (error) {
+      return [false, error.message];
+    }
+  }
 }

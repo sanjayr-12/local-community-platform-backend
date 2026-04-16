@@ -114,6 +114,22 @@ export class PostService {
     return await this.postRepository.removeSavedPost(postId, userId);
   }
 
+  async searchPosts(district: string, keyword: string, userId: number) {
+    const [status, data] = await this.postRepository.searchPostsByKeyword(
+      district,
+      keyword,
+      userId,
+    );
+    if (status) {
+      const posts = data as any[];
+      Promise.all(
+        posts.map((p) => this.postRepository.addView(p.postId, userId)),
+      ).catch(() => {});
+      return [true, data];
+    }
+    return [false, "Something went wrong"];
+  }
+
   async getTrending(district: string) {
     const [status, cached] = await this.postRepository.getTrendingByDistrict(district);
     if (status && cached) {

@@ -8,6 +8,7 @@ import {
   getTrendingController,
   removeSavedPostController,
   savePostController,
+  searchPostsController,
   uploadImageController,
 } from "../controllers/PostController.ts";
 
@@ -20,6 +21,7 @@ postRouter.post("/upload", uploadImageController);
 postRouter.get("/", getAllPostController);
 postRouter.get("/my", getMyPostsController);
 postRouter.get("/trending", getTrendingController);
+postRouter.get("/search", searchPostsController);
 postRouter.post("/save", savePostController);
 postRouter.get("/save", getSavedPostController);
 postRouter.delete("/save/:id", removeSavedPostController);

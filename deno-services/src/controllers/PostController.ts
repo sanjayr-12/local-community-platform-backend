@@ -147,6 +147,30 @@ export const removeSavedPostController = async(c:Context)=>{
   }
 }
 
+export const searchPostsController = async (c: Context) => {
+  try {
+    const district = c.req.query("district");
+    const keyword = c.req.query("keyword");
+
+    if (!district || district.trim() === "") {
+      return c.json({ status: "error", message: "district query param is required" }, 406);
+    }
+    if (!keyword || keyword.trim() === "") {
+      return c.json({ status: "error", message: "keyword query param is required" }, 406);
+    }
+
+    const user = c.get("user");
+    const [status, response] = await postService.searchPosts(district, keyword.trim(), user.id);
+    if (!status) {
+      return c.json({ status: "error", message: response }, 406);
+    }
+    return c.json({ status: "ok", data: response }, 200);
+  } catch (error) {
+    console.log("searchPostsController():: ", error.message);
+    return c.json({ status: "error", message: "Internal server error" }, 500);
+  }
+};
+
 export const getTrendingController = async (c: Context) => {
   try {
     const district = c.req.query("district");
