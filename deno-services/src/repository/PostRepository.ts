@@ -31,7 +31,7 @@ export class PostRepository {
       content: data.content,
       imageUrl: data.imageUrl,
       publicId: data.publicId,
-      location: { x: Number(data.lat), y: Number(data.long) },
+      location: { x: Number(data.long), y: Number(data.lat) },
       stateTag: data.location.state,
       districtTag: data.location.county,
       stateDistrictTag: data.location.state_district,
