@@ -14,4 +14,6 @@ export class Config {
   static readonly CLOUD_NAME: string = Deno.env.get("CLOUD_NAME");
   static readonly ML_SERVICE_URL: string =
     Deno.env.get("ML_SERVICE_URL") || "http://localhost:8000";
+  static readonly BACKEND_URL: string | undefined =
+    Deno.env.get("BACKEND_URL");
 }
