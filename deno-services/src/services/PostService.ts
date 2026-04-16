@@ -114,6 +114,10 @@ export class PostService {
     return await this.postRepository.removeSavedPost(postId, userId);
   }
 
+  async deletePost(postId: number, userId: number) {
+    return await this.postRepository.deletePost(postId, userId);
+  }
+
   async searchPosts(district: string, keyword: string, userId: number) {
     const [status, data] = await this.postRepository.searchPostsByKeyword(
       district,

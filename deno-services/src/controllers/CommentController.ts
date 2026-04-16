@@ -36,3 +36,20 @@ export const getCommentsController = async (c: Context) => {
     return c.json({ status: "error", message: "Internal server error" }, 500);
   }
 };
+
+export const deleteCommentController = async (c: Context) => {
+  try {
+    const commentId = Number(c.req.param("commentId"));
+    if (!commentId || isNaN(commentId)) {
+      return c.json({ status: "error", message: "Invalid comment id" }, 406);
+    }
+    const userId = c.get("user").id;
+    const [status, response] = await commentService.deleteComment(commentId, userId);
+    if (!status) return c.json({ status: "error", message: response }, 403);
+    return c.json({ status: "ok", message: response }, 200);
+  } catch (err) {
+    console.log("deleteCommentController():: ", err.message);
+    return c.json({ status: "error", message: "Internal server error" }, 500);
+  }
+};
+

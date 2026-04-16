@@ -12,4 +12,9 @@ export class CommentService {
   async getComments(postId: number) {
     return await this.commentRepository.getComments(postId);
   }
+
+  async deleteComment(commentId: number, userId: number) {
+    return await this.commentRepository.deleteComment(commentId, userId);
+  }
 }
+

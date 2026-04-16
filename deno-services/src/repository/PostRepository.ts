@@ -1,7 +1,7 @@
 import { Service } from "typedi";
 import { DB, getPostgresClient } from "../core/db.ts";
 import { AnyPgTable } from "drizzle-orm/pg-core";
-import { likes, postViews, posts, saved, trendingTopics } from "../db/schema/PostSchema.ts";
+import { comments, likes, postViews, posts, saved, trendingTopics } from "../db/schema/PostSchema.ts";
 import { Location } from "../types.ts";
 import { and, eq, sql } from "drizzle-orm";
 import { users } from "../db/schema/UserSchema.ts";
@@ -247,6 +247,32 @@ export class PostRepository {
         order by p.created_at desc
       `);
       return [true, allPosts];
+    } catch (error) {
+      return [false, error.message];
+    }
+  }
+
+  async deletePost(postId: number, userId: number) {
+    try {
+      // Verify ownership first
+      const existing = await this.db
+        .select({ authorId: posts.authorId })
+        .from(posts)
+        .where(eq(posts.id, postId))
+        .limit(1);
+
+      if (!existing.length || existing[0].authorId !== userId) {
+        return [false, "Post not found or you are not the author"];
+      }
+
+      // Cascade-delete child rows (FK constraints prevent direct delete)
+      await this.db.delete(postViews).where(eq(postViews.postId, postId));
+      await this.db.delete(likes).where(eq(likes.postId, postId));
+      await this.db.delete(saved).where(eq(saved.postId, postId));
+      await this.db.delete(comments).where(eq(comments.postId, postId));
+      await this.db.delete(posts).where(eq(posts.id, postId));
+
+      return [true, "Post deleted"];
     } catch (error) {
       return [false, error.message];
     }

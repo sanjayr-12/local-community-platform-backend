@@ -147,6 +147,22 @@ export const removeSavedPostController = async(c:Context)=>{
   }
 }
 
+export const deletePostController = async (c: Context) => {
+  try {
+    const postId = Number(c.req.param("id"));
+    if (!postId || isNaN(postId)) {
+      return c.json({ status: "error", message: "Invalid post id" }, 406);
+    }
+    const userId = c.get("user").id;
+    const [status, response] = await postService.deletePost(postId, userId);
+    if (!status) return c.json({ status: "error", message: response }, 403);
+    return c.json({ status: "ok", message: response }, 200);
+  } catch (error) {
+    console.log("deletePostController():: ", error.message);
+    return c.json({ status: "error", message: "Internal server error" }, 500);
+  }
+};
+
 export const searchPostsController = async (c: Context) => {
   try {
     const district = c.req.query("district");

@@ -2,7 +2,7 @@ import { Service } from "typedi";
 import { DB, getPostgresClient } from "../core/db.ts";
 import { comments } from "../db/schema/PostSchema.ts";
 import { users } from "../db/schema/UserSchema.ts";
-import { sql } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 @Service()
 export class CommentRepository {
@@ -37,6 +37,25 @@ export class CommentRepository {
         order by c.id asc
       `);
       return [true, result];
+    } catch (error) {
+      return [false, error.message];
+    }
+  }
+
+  async deleteComment(commentId: number, userId: number) {
+    try {
+      const existing = await this.db
+        .select({ authorId: comments.authorId })
+        .from(comments)
+        .where(eq(comments.id, commentId))
+        .limit(1);
+
+      if (!existing.length || existing[0].authorId !== userId) {
+        return [false, "Comment not found or you are not the author"];
+      }
+
+      await this.db.delete(comments).where(eq(comments.id, commentId));
+      return [true, "Comment deleted"];
     } catch (error) {
       return [false, error.message];
     }
